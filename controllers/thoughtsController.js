@@ -55,7 +55,12 @@ module.exports = {
                 return res.status(404).json({ message: "No Thought with that Id."});
             }
 
-            const thought = await Thought.findByIdAndUpdate(req.params._id, req.body);
+            const userAdjust = await User.findOne({ username: req.body.username});
+            if(!userAdjust){
+                return res.status(404).json( { message: "No user with that username found"});
+            }
+
+            const thought = await Thought.findByIdAndUpdate(req.params._id, req.body, { new:true });
             
             if(!thought) {
                 return res.status(404).json( { message: "No thought with that Id."});
@@ -66,7 +71,8 @@ module.exports = {
                 const oldUser = await User.findOneAndUpdate({ username: oldThought.username },
                     { $pull: { thoughts: thought._id } },
                     { new: true });
-
+                
+                
                 const newUser = await User.findOneAndUpdate({ username: req.body.username }, 
                     { $push: { thoughts: thought._id} },
                     { new: true })

@@ -25,12 +25,12 @@ module.exports = {
 
     async getSingleUser(req, res) {
         try {
-            const response = await User.findById(req.params._id).populate('thoughts').populate('friends', 'username -_id');
+            const response = await User.findById(req.params._id).populate('thoughts').populate('friends', 'username _id');
 
             return res.json(response);
         } catch (error) {
-            console.log(err);
-            res.send(err);
+            console.log(error);
+            res.send(error);
         }
     },
 

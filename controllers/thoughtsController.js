@@ -104,5 +104,55 @@ module.exports = {
         
     },
 
+    async createReaction( req, res ){
+        try {
+
+            const { reactionBody, username } = req.body;
+
+            if(!reactionBody | !username ){
+                return res.status(400).json({ message: "Reaction Contents Missing"});
+            }
+
+            const thought = await Thought.findByIdAndUpdate(req.params._id, 
+                { $push: { reactions: {
+                    reactionBody,
+                    username
+                }}},
+                { new: true });
+
+            if(!thought){
+                return res.status(404).json({ message: "No thought with that Id"});
+            }
+
+            return res.status(200).json({ message: "Reaction succesfully added", thought})
+
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send(error);
+        }
+    },
+
+    async deleteReaction( req, res ){
+        try {
+            
+            if(!req.body.reactionId) {
+                return res.status(404).json({ message: "Missing reactionId in body."});
+            }
+
+            const thought = await Thought.findByIdAndUpdate(req.params._id,
+                { $pull: { reactions: { reactionId: req.body.reactionId }}},
+                { new: true });
+
+            if(!thought){
+                return res.status(404).json({ message: "No thought with that Id"});
+            }
+
+            return res.status(200).json({ message: "Reaction succesfully removed", thought})
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send(error);
+        }
+    }
+
 }
 

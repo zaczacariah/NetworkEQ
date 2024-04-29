@@ -1,14 +1,21 @@
-// const router = require('express').Router();
+const router = require('express').Router();
 
-// const { 
-//   addFriend,
+const { 
+  getThoughts,
+  getThought,
+  createThought,
+  updateThought,
+  deleteThought,
 
-//  } = require('../../controllers/thoughtsController.js');
+ } = require('../../controllers/thoughtsController.js');
 
-// // The `/api/thought` endpoint
+// The `/api/thought` endpoint
+
+router.route('/').get(getThoughts).post(createThought);
+
+router.route('/:_id').get(getThought).post(updateThought).delete(deleteThought);
 
 
-// // router.route('/:_id').get(getSingleUser).put(updateUser).delete(deleteUser);
 
 
-// module.exports = router;
+module.exports = router;

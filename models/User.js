@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 const { Thought } = require('./Thought');
 
 
-// Schema to create Student model
+// Schema to create User model
 const userSchema = new Schema(
   {
 
@@ -42,10 +42,11 @@ const userSchema = new Schema(
   }
 );
 
-// userSchema.virtual('friendCount')
-//   .get(function() {
-//     return this.friends.length;
-//   });
+//Create a virtual for friend Count
+userSchema.virtual('friendCount')
+  .get(function() {
+    return this.friends.length;
+  });
 
 const User = model('user', userSchema);
 

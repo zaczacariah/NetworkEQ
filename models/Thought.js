@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 const reactionSchema = require('./Reaction');
 
 
-// Schema to create Student model
+// Schema to create Thought model
 const thoughtSchema = new Schema(
   {
     thoughtText: {
@@ -32,7 +32,7 @@ const thoughtSchema = new Schema(
 
 function time(createdAt){
     //2022-02-26T17:08:14.008Z
-    return 'TimeStamp to be done';
+    return `${createdAt.getHours()}:${createdAt.getMinutes()} on ${createdAt.getDate()}/${createdAt.getMonth()+1}/${createdAt.getFullYear()}`;
 }
 
 

@@ -93,8 +93,10 @@ module.exports = {
 
             await Thought.deleteMany({ username });
 
+            //Find all thoughts by this user
             const thoughts = await Thought.find({ "reactions.username": username })
-
+            
+            //remove all reactions by the user from each thought
             for (let thought of thoughts) {
                 thought.reactions = thought.reactions.filter(reaction => reaction.username !== username);
                 await thought.save();
@@ -147,7 +149,7 @@ module.exports = {
             const user = await User.findByIdAndUpdate(
                 _id,
                 { $pull: { friends: friendId } },
-                { new: true }  // Option to return the updated document
+                { new: true }  
             );
 
             if(!user){

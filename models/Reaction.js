@@ -3,7 +3,7 @@ const { Schema, model } = mongoose;
 
 
 
-// Schema to create Student model
+// Schema to create Reaction model
 const reactionSchema = new Schema(
   {
     reactionId: {
@@ -33,10 +33,10 @@ const reactionSchema = new Schema(
   }
 );
 
-
+// Getter for created at Time
 function time(createdAt){
   //2022-02-26T17:08:14.008Z
-  return 'TimeStamp to be done';
+  return `${createdAt.getHours()}:${createdAt.getMinutes()} on ${createdAt.getDate()}/${createdAt.getMonth()+1}/${createdAt.getFullYear()}`;
 }
 
 
